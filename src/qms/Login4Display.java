@@ -45,7 +45,6 @@ public class Login4Display {
             po_props.load(new FileInputStream(System.getProperty("sys.default.path.config") + "/config/CounterNo.properties"));
 
             System.setProperty("counter.id", po_props.getProperty("counter.id"));
-            System.out.println("COMPUTER ID: " + System.getProperty("counter.id"));
             
             return true;
         } catch (FileNotFoundException ex) {
