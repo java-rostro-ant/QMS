@@ -89,7 +89,7 @@ public class DisplayController implements Initializable, ScreenInterface {
         oTrans.setTranStat(1);
         oTrans.setWithUI(true);
         ctr_number = System.getProperty("counter.ctr_numer");
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(Integer.parseInt(System.getProperty("display.thread.seconds"))), e -> {
             loadDetail();
             loadOngoing();
         }));
