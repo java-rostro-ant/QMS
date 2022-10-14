@@ -30,24 +30,27 @@ public class Display extends Application {
         view.setController(controller);        
         Parent parent = view.load();
 
-        parent.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                xOffset = event.getSceneX();
-                yOffset = event.getSceneY();
-            }
-        });
-        parent.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                stage.setX(event.getScreenX() - xOffset);
-                stage.setY(event.getScreenY() - yOffset);
-            }
-        });
+//        parent.setOnMousePressed(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                xOffset = event.getSceneX();
+//                yOffset = event.getSceneY();
+//            }
+//        });
+//        parent.setOnMouseDragged(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                stage.setX(event.getScreenX() - xOffset);
+//                stage.setY(event.getScreenY() - yOffset);
+//            }
+//        });
         
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
+        
+        stage.setFullScreen(true);
+        stage.setResizable(false);
         stage.show();
     }
     

@@ -204,14 +204,14 @@ public class Queue {
         String lsSQL;
         p_sMessage = "";
         if(OpenOngoing()){
-            String lsCtrCodex = (String)p_oOngoing.getString("sCtrCodex");
+            String lsCtrCodex = System.getProperty("counter.id");
             int lnCtr = Integer.parseInt(p_oOngoing.getString("sCtrNmber").toString());
             
             deleteOngoing();
             return insertOngoing(lsCtrCodex,String.valueOf(lnCtr + 1));
         
         }else{
-            String lsCtrCodex = (String)p_oCounter.getString("sCtrCodex");
+            String lsCtrCodex = System.getProperty("counter.id");
             return insertOngoing(lsCtrCodex, "1");
         }
         
