@@ -164,7 +164,6 @@ public class Queue {
          
         p_sMessage = "";
         try {
-            
             String lsSQL;
             ResultSet loRS;
             RowSetFactory factory = RowSetProvider.newFactory();
@@ -181,9 +180,7 @@ public class Queue {
                 transNo = loRS.getString("sTransNox");
             }
             if(!transNo.isEmpty()){
-                
-                return updateToNotActive(transNo) 
-                        && updateToActive(transNo);
+                return updateToNotActive(transNo) && updateToActive(transNo);
             }
              
        } catch (SQLException ex) {
@@ -201,7 +198,7 @@ public class Queue {
         p_sMessage = "";
         if(OpenOngoing()){
             String lsCtrCodex = System.getProperty("counter.id");
-            int lnCtr = Integer.parseInt(p_oOngoing.getString("sCtrNmber").toString());
+            int lnCtr = Integer.parseInt(p_oOngoing.getString("sCtrNmber"));
             
             deleteOngoing();
             return insertOngoing(lsCtrCodex,String.valueOf(lnCtr + 1));
@@ -287,9 +284,9 @@ public class Queue {
     }
     private boolean updateToActive(String lsTransNo){
         String lsSQL = "UPDATE Queueing_Info SET "+
-                    " cTranStat = 1" +
-                    " WHERE sCtrCodex = " + SQLUtil.toSQL(System.getProperty("counter.id")) +
-                    " AND sTransNox = " +  SQLUtil.toSQL(lsTransNo);
+                            " cTranStat = 1" +
+                        " WHERE sCtrCodex = " + SQLUtil.toSQL(System.getProperty("counter.id")) +
+                            " AND sTransNox = " +  SQLUtil.toSQL(lsTransNo);
 //            lsSQL = MiscUtil.rowset2SQL(p_oOngoing, ONGOING_TABLE, "");
             
         if (!lsSQL.isEmpty()){
@@ -359,7 +356,6 @@ public class Queue {
             String transNo = "";
             if(loRS != null){
                 while(loRS.next()){
-                    
                     updateToActive(loRS.getString("sTransNox"));
                 }
             }
@@ -372,8 +368,8 @@ public class Queue {
     
     private boolean insertOngoing(String lsCodex, String lsNumber){
         String lsSQL = "INSERT INTO Queueing_Ongoing SET "+
-                    "sCtrCodex = " +SQLUtil.toSQL(lsCodex) + 
-                    ", sCtrNmber = " +SQLUtil.toSQL(lsNumber);
+                        "  sCtrCodex = " +SQLUtil.toSQL(lsCodex) + 
+                        ", sCtrNmber = " +SQLUtil.toSQL(lsNumber);
 //            lsSQL = MiscUtil.rowset2SQL(p_oOngoing, ONGOING_TABLE, "");
             
         if (!lsSQL.isEmpty()){
@@ -396,7 +392,6 @@ public class Queue {
         }
     }
     private void deleteOngoing(){
-        
         String lsSQL = "DELETE FROM Queueing_Ongoing";
 //            lsSQL = MiscUtil.rowset2SQL(p_oOngoing, ONGOING_TABLE, "");
             
@@ -546,7 +541,7 @@ public class Queue {
                 }
                 
                 p_oDisplay.moveToInsertRow();
-                MiscUtil.initRowSet(p_oDisplay); 
+                initRowSet(p_oDisplay); 
                 p_oDisplay.updateString("sCtrCodex", loRS.getString("sCtrCodex"));
                 if(transNo.isEmpty()){
                     p_oDisplay.updateString("sTransNox", "");
@@ -754,5 +749,34 @@ public class Queue {
         }
         
         return lnIndex;
+    }
+    
+    private void initRowSet(CachedRowSet rowset) throws SQLException{
+        java.sql.ResultSetMetaData cols = rowset.getMetaData();
+        for(int n=1;n<=cols.getColumnCount();n++){
+            switch(cols.getColumnType(n)){
+                case java.sql.Types.BIGINT:
+                case java.sql.Types.INTEGER:
+                case java.sql.Types.SMALLINT:
+                case java.sql.Types.TINYINT:
+                    rowset.updateObject(n, 0);
+                    break;
+                case java.sql.Types.DECIMAL:
+                case java.sql.Types.DOUBLE:
+                case java.sql.Types.FLOAT:
+                case java.sql.Types.NUMERIC:
+                case java.sql.Types.REAL:
+                    rowset.updateObject(n, 0.00);
+                    break;
+                case java.sql.Types.CHAR:
+                case java.sql.Types.NCHAR:
+                case java.sql.Types.NVARCHAR:
+                case java.sql.Types.VARCHAR:
+                    rowset.updateObject(n, "");
+                    break;
+                default:
+                    rowset.updateObject(n, null);
+            }
+        }
     }
 }

@@ -1,26 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package qms.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Animation;
@@ -36,10 +23,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.naming.ConfigurationException;
 import org.rmj.appdriver.GRider;
 import org.rmj.appdriver.StringHelper;
-import org.rmj.appdriver.agent.MsgBox;
 import org.rmj.appdriver.agentfx.ShowMessageFX;
 import org.rmj.appdriver.constants.EditMode;
 import qms.base.LTranDet;
@@ -68,7 +53,7 @@ public class CounterController implements Initializable, ScreenInterface {
     @FXML
     private Pane btnClose;
     @FXML
-    private Label DateAndTime, lblNumber, lblCounter;
+    private Label DateAndTime, lblNumber, lblCounter, lblCashier;
     @FXML
     private Button btnPrevious, btnNext, btnDone;
             
@@ -98,15 +83,21 @@ public class CounterController implements Initializable, ScreenInterface {
         oTrans.setListener(oListener);
         oTrans.setTranStat(01);
         oTrans.setWithUI(true);
+        
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(Integer.parseInt(System.getProperty("counter.thread.seconds"))), e -> {
             loadOngoing();
         }));
+        
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-        pbLoaded = true;
+        
         btnPrevious.setOnAction(this::cmdButton_Click);
         btnNext.setOnAction(this::cmdButton_Click);
         btnDone.setOnAction(this::cmdButton_Click);
+        lblCashier.setText(System.getProperty("counter.id"));
+        
+        pbLoaded = true;
+        
     }
     
     private Stage getStage(){
@@ -164,25 +155,21 @@ public class CounterController implements Initializable, ScreenInterface {
                 case "btnNext":
                     if(oTrans.NewTransaction()){
                         loadOngoing();
-                        if(!lblNumber.getText().toString().isEmpty()){ 
+                        if(!lblNumber.getText().isEmpty()){ 
                             if(oTrans.updateToNotActive((String)oTrans.getMaster("sTransNox"))){
-                                
                             }
                         }
                     }
                     break;
-                
                 case "btnDone":
-                    if(!lblCounter.getText().toString().isEmpty()){ 
+                    if(!lblCounter.getText().isEmpty()){ 
                         if(oTrans.UpdateToDone((String)oTrans.getMaster("sTransNox"))){
                             loadOngoing();
                         }else{
-                              ShowMessageFX.Warning(getStage(), oTrans.getMessage(),"Warning", null);
+                            ShowMessageFX.Warning(getStage(), oTrans.getMessage(),"Warning", null);
                         }
                     }
-                    
                     break;
-                
             }
             
             initButton(pnEditMode);

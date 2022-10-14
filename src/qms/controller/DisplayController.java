@@ -140,7 +140,7 @@ public class DisplayController implements Initializable, ScreenInterface {
         try {
             if(oTrans.OpenOngoing()){
                
-                lblCounter.setText("Counter #"+(String) oTrans.getOngoing("sCtrCodex"));
+                lblCounter.setText("Cashier #"+(String) oTrans.getOngoing("sCtrCodex"));
                 lblServing.setText(StringHelper.prepad((String) oTrans.getOngoing("sCtrNmber"), 4, '0'));
                 lblServing1.setText(StringHelper.prepad((String) oTrans.getOngoing("sCtrNmber"), 4, '0'));
             }    

@@ -148,7 +148,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Label prefHeight="14.0" prefWidth="196.0" text="On Display : ">
+                                    <Label prefHeight="14.0" prefWidth="196.0" text="On Display: " GridPane.rowIndex="2">
                                        <font>
                                           <Font name="MS Reference Sans Serif" size="16.0" />
                                        </font>
@@ -156,7 +156,15 @@
                                           <Insets left="5.0" />
                                        </padding>
                                     </Label>
-                                    <Label fx:id="lblNumber" prefHeight="14.0" prefWidth="196.0" GridPane.columnIndex="1">
+                                    <Label fx:id="lblNumber" prefHeight="14.0" prefWidth="196.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="lblCounter" prefHeight="14.0" prefWidth="196.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -164,17 +172,25 @@
                                           <Insets left="5.0" />
                                        </padding>
                                     </Label>
-                                    <Label fx:id="lblCounter" prefHeight="14.0" prefWidth="196.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="5.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label prefHeight="14.0" prefWidth="196.0" text="Currently Serving :" GridPane.rowIndex="2">
+                                    <Label prefHeight="14.0" prefWidth="196.0" text="Currently Serving:" GridPane.rowIndex="3">
                                        <font>
                                           <Font size="16.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label prefHeight="14.0" prefWidth="196.0" text="Cashier No.:">
+                                       <font>
+                                          <Font name="MS Reference Sans Serif" size="16.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="lblCashier" prefHeight="14.0" prefWidth="196.0" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
                                        </font>
                                        <padding>
                                           <Insets left="5.0" />
