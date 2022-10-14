@@ -45,6 +45,7 @@ public class Login4Counter {
             po_props.load(new FileInputStream(System.getProperty("sys.default.path.config") + "/config/CounterNo.properties"));
 
             System.setProperty("counter.id", po_props.getProperty("counter.id"));
+            System.setProperty("counter.thread.seconds", po_props.getProperty("counter.thread.seconds"));
             
             return true;
         } catch (FileNotFoundException ex) {

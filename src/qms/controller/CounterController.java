@@ -98,7 +98,11 @@ public class CounterController implements Initializable, ScreenInterface {
         oTrans.setListener(oListener);
         oTrans.setTranStat(01);
         oTrans.setWithUI(true);
-        loadOngoing();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(Integer.parseInt(System.getProperty("counter.thread.seconds"))), e -> {
+            loadOngoing();
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
         pbLoaded = true;
         btnPrevious.setOnAction(this::cmdButton_Click);
         btnNext.setOnAction(this::cmdButton_Click);
@@ -130,6 +134,7 @@ public class CounterController implements Initializable, ScreenInterface {
     }
     private void loadOngoing(){
         try {
+                
              if(oTrans.OpenCounter()){ 
                 if(oTrans.getItemCount()>0){
                    lblCounter.setText(StringHelper.prepad((String) oTrans.getMaster("sCtrNmber"), 4, '0'));

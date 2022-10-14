@@ -20,38 +20,43 @@
 
 <AnchorPane id="AnchorPane" fx:id="AnchorParent" prefHeight="768.0" prefWidth="1366.0" styleClass="parent-body" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-border-width: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <SplitPane dividerPositions="0.7" prefHeight="160.0" prefWidth="200.0" style="-fx-border-color: #3C2415; -fx-border-width: 5;" BorderPane.alignment="CENTER">
+                  <SplitPane dividerPositions="0.7" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <items>
                         <AnchorPane>
                            <children>
-                              <Label layoutX="195.0" layoutY="59.0" text="Now Serving" textFill="#3c2415">
+                              <Label layoutX="231.0" layoutY="234.0" text="Now Serving" textFill="#fffafa">
                                  <font>
-                                    <Font size="96.0" />
+                                    <Font name="Arial Black" size="64.0" />
                                  </font>
                               </Label>
-                              <AnchorPane layoutX="189.0" layoutY="200.0" styleClass="number-box" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="189.0" AnchorPane.rightAnchor="211.0" AnchorPane.topAnchor="200.0">
+                              <AnchorPane layoutX="176.0" layoutY="330.0" styleClass="number-box" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="176.0" AnchorPane.rightAnchor="224.0" AnchorPane.topAnchor="330.0">
                                  <children>
                                     <Label fx:id="lblServing" alignment="CENTER" layoutX="5.0" layoutY="5.0" text="0008" textAlignment="CENTER" textFill="#3c2415" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                                        <font>
                                           <Font name="Segoe UI Bold" size="180.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblServing1" alignment="CENTER" layoutX="20.0" layoutY="20.0" text="0008" textAlignment="CENTER" textFill="#ff8800" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Label fx:id="lblServing1" alignment="CENTER" layoutX="20.0" layoutY="20.0" text="0008" textAlignment="CENTER" textFill="#fff8f0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font name="Segoe UI Bold" size="180.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </AnchorPane>
-                              <Label fx:id="lblCounter" layoutX="214.0" layoutY="457.0" text="Counter # 8" textFill="#3c2415">
+                              <Label fx:id="lblCounter" layoutX="249.0" layoutY="575.0" text="Counter # 8" textFill="WHITE">
                                  <font>
-                                    <Font size="96.0" />
+                                    <Font name="Arial Black" size="64.0" />
                                  </font>
                               </Label>
+                              <ImageView fitHeight="196.0" fitWidth="690.0" layoutX="93.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="25.0">
+                                 <image>
+                                    <Image url="@../images/Title1.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -67,9 +72,9 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #3C2415;" GridPane.columnSpan="2">
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffff;" GridPane.columnSpan="2">
                                              <children>
-                                                <Label alignment="CENTER" text="CURRENT SERVING" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <Label alignment="CENTER" text="SERVING" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <font>
                                                       <Font name="System Bold" size="36.0" />
                                                    </font>
@@ -95,7 +100,7 @@
                   </SplitPane>
                </center>
                <top>
-                  <BorderPane style="-fx-background-color: #3C2415;" BorderPane.alignment="CENTER">
+                  <BorderPane BorderPane.alignment="CENTER">
                      <right>
                         <HBox alignment="CENTER_RIGHT" prefHeight="30.0" BorderPane.alignment="CENTER">
                            <children>
@@ -131,7 +136,7 @@
                      <left>
                         <ImageView fitHeight="30.0" fitWidth="377.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                            <image>
-                              <Image url="@../images/icon.png" />
+                              <Image url="@../images/GLOGO.png" />
                            </image>
                            <BorderPane.margin>
                               <Insets bottom="2.0" left="10.0" />
@@ -139,11 +144,11 @@
                         </ImageView>
                      </left>
                      <center>
-                        <AnchorPane BorderPane.alignment="CENTER">
+                        <AnchorPane BorderPane.alignment="BOTTOM_LEFT">
                            <children>
-                              <Label text="GUANZON MOBILE FIESTA " textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Label alignment="BOTTOM_CENTER" text="GUANZON" textFill="WHITE" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
-                                    <Font name="System Bold" size="24.0" />
+                                    <Font name="Arial Black" size="26.0" />
                                  </font>
                                  <padding>
                                     <Insets left="10.0" right="20.0" />
@@ -164,11 +169,11 @@
                   </BorderPane>
                </top>
                <bottom>
-                  <AnchorPane prefHeight="30.0" style="-fx-background-color: #3C2415;" BorderPane.alignment="CENTER">
+                  <AnchorPane prefHeight="30.0" BorderPane.alignment="CENTER">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/ic-clock.png" />
                                  </image>
@@ -178,7 +183,7 @@
                               </ImageView>
                               <Label fx:id="DateAndTime" text="Tuesday, October 11, 2022    11:30 PM" textFill="WHITE">
                                  <font>
-                                    <Font name="System Bold" size="18.0" />
+                                    <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
                            </children>
