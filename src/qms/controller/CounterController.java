@@ -90,7 +90,6 @@ public class CounterController implements Initializable, ScreenInterface {
 
             @Override
             public void DetailRetreive(int fnRow, int fnIndex, Object foValue) {
-              System.out.println("loaded");
             }
         };
         

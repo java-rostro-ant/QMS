@@ -63,9 +63,6 @@ public class Queue {
                 
         if (p_sBranchCd.isEmpty()) p_sBranchCd = p_oApp.getBranchCode();
         
-        
-        loadConfig();
-        
         p_nTranStat = 0;
         p_nEditMode = EditMode.UNKNOWN;
     }
@@ -185,7 +182,6 @@ public class Queue {
             }
             if(!transNo.isEmpty()){
                 
-                System.out.println(transNo);
                 return updateToNotActive(transNo) 
                         && updateToActive(transNo);
             }
@@ -249,7 +245,7 @@ public class Queue {
         }
 
         if (!p_bWithParent) p_oApp.commitTrans();
-        System.out.println("Record successfully save");
+            System.out.println("Record successfully save");
             p_nEditMode = EditMode.ADDNEW;
                 return true;
         } else{
@@ -270,8 +266,6 @@ public class Queue {
                 " AND cTranStat <> '2'" +
                 " AND sTransNox <> " +  SQLUtil.toSQL(lsTransNo);
 
-//            lsSQL = MiscUtil.rowset2SQL(p_oOngoing, ONGOING_TABLE, "");
-        System.out.println(lsSQL);
        if (!lsSQL.isEmpty()){
            if (!p_bWithParent) p_oApp.beginTrans();
 
@@ -282,7 +276,7 @@ public class Queue {
            }
 
            if (!p_bWithParent) p_oApp.commitTrans();
-               System.out.println("Record successfully save");
+               System.out.println("Record updated to not active.");
                p_nEditMode = EditMode.ADDNEW;
                return true;
        } else{
@@ -308,7 +302,7 @@ public class Queue {
             }
 
             if (!p_bWithParent) p_oApp.commitTrans();
-                System.out.println("Record successfully save");
+                System.out.println("Record set to active.");
                 p_nEditMode = EditMode.ADDNEW;
                 return true;
         } else{
@@ -339,7 +333,7 @@ public class Queue {
             }
 
             if (!p_bWithParent) p_oApp.commitTrans();
-                System.out.println("Record successfully save");
+                System.out.println("Record successfully done");
                 updatePrevious();
                 p_nEditMode = EditMode.ADDNEW;
                 return true;
@@ -392,7 +386,7 @@ public class Queue {
             }
 
             if (!p_bWithParent) p_oApp.commitTrans();
-            System.out.println("Record successfully save");
+            System.out.println("Record successfully save to ongoing");
                 p_nEditMode = EditMode.ADDNEW;
                 return insertInfo(lsCodex,lsNumber);
         } else{
@@ -416,7 +410,7 @@ public class Queue {
             }
 
             if (!p_bWithParent) p_oApp.commitTrans();
-            System.out.println("Record successfully delete");
+            System.out.println("Record successfully delete.");
         } else{
             p_sMessage = "No record to delete.";
         }
@@ -434,7 +428,7 @@ public class Queue {
             RowSetFactory factory = RowSetProvider.newFactory();
 
             lsSQL = getSQ_Counter() + " WHERE sCtrCodex = " + SQLUtil.toSQL(System.getProperty("counter.id"));
-            System.out.println(lsSQL);
+        
             //open master
             loRS = p_oApp.executeQuery(lsSQL);
             p_oCounter = factory.createCachedRowSet();
@@ -454,7 +448,7 @@ public class Queue {
             }
             lsCondition = lsCondition + " AND sCtrCodex = " + SQLUtil.toSQL((String)getCounter("sCtrCodex"));
             lsSQL = getSQ_Master() + lsCondition + "  ORDER BY sTransNox DESC LIMIT 1";
-            System.out.println(lsSQL);
+           
             //open master
             loRS = p_oApp.executeQuery(lsSQL);
             p_oMaster = factory.createCachedRowSet();
@@ -514,7 +508,6 @@ public class Queue {
             
             String lsSQL = getSQ_Counter() ;
             ResultSet loRS;
-            System.out.println(lsSQL);
             //open master
             loRS = p_oApp.executeQuery(lsSQL);
              int lnRow = 1;
@@ -522,8 +515,8 @@ public class Queue {
               
                
                 p_oDisplay.last();
-               String lsCondition =" sCtrCodex = " + SQLUtil.toSQL(loRS.getString("sCtrCodex"));
-               String foSQL = getSQ_Master();
+                String lsCondition =" sCtrCodex = " + SQLUtil.toSQL(loRS.getString("sCtrCodex"));
+                String foSQL = getSQ_Master();
                
                 String lsStat = String.valueOf(p_nTranStat);
             
@@ -538,7 +531,6 @@ public class Queue {
                 
                 lsCondition = lsCondition + " ORDER BY sTransNox DESC LIMIT 1";
                 foSQL = foSQL + lsCondition;
-                System.out.println(foSQL);
                 ResultSet foRS = p_oApp.executeQuery(foSQL);
                 String transNo = "";
                 String ctrcode = "";
@@ -552,20 +544,23 @@ public class Queue {
                     
                    
                 }
-                if(!transNo.isEmpty()){
-                    
-                    p_oDisplay.moveToInsertRow();
-                    
-                    MiscUtil.initRowSet(p_oDisplay);  
+                
+                p_oDisplay.moveToInsertRow();
+                MiscUtil.initRowSet(p_oDisplay); 
+                p_oDisplay.updateString("sCtrCodex", loRS.getString("sCtrCodex"));
+                if(transNo.isEmpty()){
+                    p_oDisplay.updateString("sTransNox", "");
+                    p_oDisplay.updateString("sCtrNmber", "");
+                    p_oDisplay.updateString("cTranStat", "");
+                }else{
                     p_oDisplay.updateString("sTransNox", transNo);
                     p_oDisplay.updateString("sCtrCodex", ctrcode);
                     p_oDisplay.updateString("sCtrNmber", ctrnumber);
                     p_oDisplay.updateString("cTranStat", transtat);
-                    p_oDisplay.insertRow();
-                    p_oDisplay.moveToCurrentRow();
-
                 }
                
+                p_oDisplay.insertRow();
+                p_oDisplay.moveToCurrentRow();
                 lnRow++;
                 MiscUtil.close(foRS);
 
@@ -759,13 +754,5 @@ public class Queue {
         }
         
         return lnIndex;
-    }
-    
-    private void loadConfig(){
-        //update the value on configuration before deployment
-        System.setProperty(DEBUG_MODE, "0"); 
-        System.setProperty(REQUIRE_CSS, "0");
-        System.setProperty(REQUIRE_CM, "1");
-        System.setProperty(REQUIRE_BANK_ON_APPROVAL, "0");
     }
 }

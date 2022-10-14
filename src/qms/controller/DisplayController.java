@@ -81,7 +81,6 @@ public class DisplayController implements Initializable, ScreenInterface {
 
             @Override
             public void DetailRetreive(int fnRow, int fnIndex, Object foValue) {
-              System.out.println("loaded");
             }
         };
         
@@ -123,8 +122,12 @@ public class DisplayController implements Initializable, ScreenInterface {
             if(oTrans.OpenOnDispaly()){
                 data.clear();
                 for (int i = 1; i <= oTrans.getDisplayItemCount(); i++) {
+                    String ctr_number = (String)oTrans.getOnDisplay(i,"sCtrNmber");
+                    if(!ctr_number.isEmpty()){
+                        ctr_number = StringHelper.prepad((String)oTrans.getOnDisplay(i,"sCtrNmber"), 4, '0');
+                    }
                     data.add(new TableModel((String)oTrans.getOnDisplay(i,2)
-                        , StringHelper.prepad((String)oTrans.getOnDisplay(i,"sCtrNmber"), 4, '0')));
+                        , ctr_number));
                 }
 
                 initGrid();
