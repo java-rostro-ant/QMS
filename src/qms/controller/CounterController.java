@@ -169,10 +169,9 @@ public class CounterController implements Initializable, ScreenInterface {
                     break;
                 
                 case "btnDone":
-                    if(!lblNumber.getText().toString().isEmpty()){ 
+                    if(!lblCounter.getText().toString().isEmpty()){ 
                         if(oTrans.UpdateToDone((String)oTrans.getMaster("sTransNox"))){
-                        loadOngoing();
-                        
+                            loadOngoing();
                         }else{
                               ShowMessageFX.Warning(getStage(), oTrans.getMessage(),"Warning", null);
                         }
