@@ -43,7 +43,7 @@ import qms.model.TableModel;
  *
  * @author User
  */
-public class OnDisplayController implements Initializable, ScreenInterface {
+public class DisplayController implements Initializable, ScreenInterface {
 
     private GRider oApp;
      
@@ -130,7 +130,7 @@ public class OnDisplayController implements Initializable, ScreenInterface {
                 initGrid();
             }
         } catch (SQLException ex) {
-                Logger.getLogger(OnDisplayController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DisplayController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
     private void loadOngoing(){

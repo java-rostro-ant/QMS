@@ -7,7 +7,7 @@ import java.util.Properties;
 import javafx.application.Application;
 import org.rmj.appdriver.GRider;
 
-public class LetMeInn {
+public class Login4Counter {
     public static void main(String [] args){      
         String path;
         if(System.getProperty("os.name").toLowerCase().contains("win")){
@@ -33,7 +33,7 @@ public class LetMeInn {
         
         loadProperties();
         
-        GriderGui instance = new GriderGui();
+        Counter instance = new Counter();
         instance.setGRider(oApp);
         
         Application.launch(instance.getClass());

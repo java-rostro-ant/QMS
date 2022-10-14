@@ -1,38 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package qms;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.rmj.appdriver.GRider;
-import qms.controller.FXMLDocumentController;
+import qms.controller.FXMLCounterController;
 
-public class GriderGui extends Application {
-    public final static String pxeMainFormTitle = "Incentives";
+public class Counter extends Application {
     public final static String pxeMainForm = "/qms/view/FXMLDocument.fxml";
-    public final static String pxeStageIcon = "images/icon.png";
+    
     public static GRider oApp;
     
     private double xOffset = 0; 
     private double yOffset = 0;
+    
     @Override
     public void start(Stage stage) throws Exception {        
         FXMLLoader view = new FXMLLoader();
         view.setLocation(getClass().getResource(pxeMainForm));
         
-        FXMLDocumentController controller = new FXMLDocumentController();
+        FXMLCounterController controller = new FXMLCounterController();
         controller.setGRider(oApp);
         
         view.setController(controller);        
