@@ -1,0 +1,97 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Oct 18, 2022, 8:56:50 AM
+    Author     : User
+*/
+
+.lbl-serving-default{
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 15px;
+    -fx-border-width: 10px;
+    -fx-font-size: 180px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+.lbl-serving-default-1{
+    -fx-font-size: 180px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+.lbl-title-default{
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+.lbl-table-title-default{
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+/*.img-fest-default{
+    fx-margin: 40px;
+}*/
+.lbl-now-serving-default{
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+
+.lbl-time-default{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+.lbl-table-title-default{
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+
+
+/*resize*/
+.lbl-title-medium{
+    -fx-font-size: 45px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+    -fx-padding: 0 0 0 20;
+}
+
+.lbl-serving-medium{
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 30px;
+    -fx-border-width: 20px;
+    -fx-font-size: 240px;
+    -fx-font-weight: bold;
+    -fx-padding: 15px;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+.lbl-serving-medium-1{
+    -fx-font-size: 240px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 0 10;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+
+/*.img-fest-medium{
+    fx-margin: -40px;
+}*/
+
+.lbl-now-serving-medium{
+    -fx-font-size: 84px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial ,sans-serif;
+}
+
+.lbl-time-medium{
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+.lbl-table-title-medium{
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}

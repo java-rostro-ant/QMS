@@ -46,6 +46,7 @@ public class Login4Display {
 
             System.setProperty("counter.id", po_props.getProperty("counter.id"));
             System.setProperty("display.thread.seconds", po_props.getProperty("display.thread.seconds"));
+            System.setProperty("counter.number", po_props.getProperty("counter.number"));
             
             return true;
         } catch (FileNotFoundException ex) {

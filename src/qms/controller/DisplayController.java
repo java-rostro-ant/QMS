@@ -4,13 +4,23 @@
  */
 package qms.controller;
 
+import com.gtranslate.Audio;
+import com.gtranslate.Language;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import static java.awt.SystemColor.text;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,15 +32,29 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.speech.Central;
+import javax.speech.synthesis.Synthesizer;
+import javax.speech.synthesis.SynthesizerModeDesc;
+import javax.speech.synthesis.Voice;
+import javazoom.jl.decoder.JavaLayerException;
 import org.rmj.appdriver.GRider;
 import org.rmj.appdriver.StringHelper;
 import qms.base.LTranDet;
@@ -46,7 +70,7 @@ import qms.model.TableModel;
 public class DisplayController implements Initializable, ScreenInterface {
 
     private GRider oApp;
-     
+     String readText ="";
     private Queue oTrans;
     private LTranDet oListener;
     private String ctr_number = "";
@@ -54,11 +78,19 @@ public class DisplayController implements Initializable, ScreenInterface {
     @FXML
     private AnchorPane AnchorParent;
     @FXML
+    private VBox vbBody;
+    @FXML
+    private BorderPane toolbar;
+    @FXML
+    private GridPane gridNumber;
+    @FXML
+    private ImageView imgLogo,imgFest,imgMinimize,imgClose;
+    @FXML
     private Pane btnMin;
     @FXML
     private Pane btnClose;
     @FXML
-    private Label DateAndTime,lblServing, lblServing1, lblCounter;
+    private Label DateAndTime,lblServing, lblServing1, lblCounter,lblTitle,lblTableTitle;
     @FXML
     private TableView tblServings;
     @FXML
@@ -95,6 +127,59 @@ public class DisplayController implements Initializable, ScreenInterface {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+//       Timeline voiceline = new Timeline(new KeyFrame(Duration.seconds(6), e -> {
+//            
+//            playVoice();
+//        }));
+//        voiceline.setCycleCount(Timeline.INDEFINITE);
+//        voiceline.play();
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        System.out.println("Height: " + screenBounds.getHeight() + " Width: " + screenBounds.getWidth());
+        
+        AnchorParent.setPrefWidth(screenBounds.getWidth());
+        AnchorParent.setPrefHeight(screenBounds.getHeight());
+         System.out.println("AnchorPane Size");
+         System.out.println("Height: " + AnchorParent.getPrefHeight()+ " Width: " + AnchorParent.getPrefWidth());
+        if(AnchorParent.getPrefHeight()>768){
+          
+            AnchorParent.getStylesheets().add("/qms/css/StyleSheet_1.css");
+            imgLogo.setFitWidth(40);
+            imgLogo.setFitHeight(40);
+            index01.setMinWidth(320);
+            index02.setMinWidth(260);
+            
+            imgFest.setFitWidth(800);
+            imgFest.setFitHeight(220);
+            lblTitle.getStyleClass().add("lbl-title-medium");
+            lblServing.getStyleClass().add("lbl-serving-medium");
+            lblServing1.getStyleClass().add("lbl-serving-medium-1");
+            lblTableTitle.getStyleClass().add("lbl-table-title-medium");
+//            btnMin.setMinWidth(70);
+//            btnMin.setMinHeight(40);
+            btnMin.getStyleClass().add("head-ic-min");
+            gridNumber.setStyle("-fx-margin: 20 40 20 40");
+            imgFest.setStyle("img-fest-medium");
+            DateAndTime.getStyleClass().add("lbl-time-medium");
+            vbBody.setSpacing(20);
+           
+        }else{
+            lblTitle.getStyleClass().add("lbl-title-default");
+            lblServing.getStyleClass().add("lbl-serving-default");
+            lblServing1.getStyleClass().add("lbl-serving-default-1");
+            DateAndTime.getStyleClass().add("lbl-time-default");
+            lblTableTitle.getStyleClass().add("lbl-table-title-default");
+            AnchorParent.getStylesheets().add("/qms/css/StyleSheet.css");
+            imgLogo.setFitWidth(24);
+            imgLogo.setFitHeight(24);
+            index01.setMinWidth(220);
+            index02.setMinWidth(182);
+            
+            imgFest.setFitWidth(680);
+            imgFest.setFitHeight(170);
+            vbBody.setSpacing(5);
+//            lblNowSerning.getStyleClass().add("lbl-now-serving-deafult");
+            gridNumber.setStyle("-fx-margin: 0 20 0 20");
+        }
     }    
     
     @Override
@@ -129,7 +214,6 @@ public class DisplayController implements Initializable, ScreenInterface {
                     data.add(new TableModel((String)oTrans.getOnDisplay(i,2)
                         , ctr_number));
                 }
-
                 initGrid();
             }
         } catch (SQLException ex) {
@@ -143,6 +227,18 @@ public class DisplayController implements Initializable, ScreenInterface {
                 lblCounter.setText("Counter #"+(String) oTrans.getOngoing("sCtrCodex"));
                 lblServing.setText(StringHelper.prepad((String) oTrans.getOngoing("sCtrNmber"), 4, '0'));
                 lblServing1.setText(StringHelper.prepad((String) oTrans.getOngoing("sCtrNmber"), 4, '0'));
+                if(!oTrans.getOngoing("sCtrNmber").toString().equalsIgnoreCase(System.getProperty("counter.number"))){
+                    System.setProperty("counter.number",oTrans.getOngoing("sCtrNmber").toString());
+                    String path = "D:/GGC_Java_Systems/audio/door_bell.mp3";  
+//
+                    //Instantiating Media class  
+                    Media media = new Media(new File(path).toURI().toString());  
+
+                    //Instantiating MediaPlayer class   
+                    MediaPlayer mediaPlayer = new MediaPlayer(media); 
+//                    mediaPlayer.setAutoPlay(true); 
+                    mediaPlayer.play();
+                }
             }    
         } catch (SQLException ex) {
             Logger.getLogger(CounterController.class.getName()).log(Level.SEVERE, null, ex);
@@ -187,5 +283,4 @@ public class DisplayController implements Initializable, ScreenInterface {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
-
 }
