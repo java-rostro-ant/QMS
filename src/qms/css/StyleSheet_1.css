@@ -98,16 +98,17 @@
     -fx-background-color: transparent;
     -fx-border-color: #e4e6e7;
     -fx-border-width: 1px 1px 1px 1px;
-    -fx-font-size: 54px;
+    -fx-size: 36px;
+    -fx-font-size: 36px;
 }
 .table-view .table-cell{
     -fx-text-fill: black;
-    -fx-font-size: 54px;
+    -fx-font-size: 36px;
     -fx-font-weight: bold;
     -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
 .table-row-cell{
-    -fx-cell-size: 54px;
+    -fx-cell-size: 36px;
     -fx-font-weight: bold;
     -fx-background-color: -fx-table-cell-border-color, #e4e6e7;
     -fx-background-insets: 0, 0 0 1 0;
