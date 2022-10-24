@@ -90,7 +90,7 @@ public class DisplayController implements Initializable, ScreenInterface {
     @FXML
     private Pane btnClose;
     @FXML
-    private Label DateAndTime,lblServing, lblServing1, lblCounter,lblTitle,lblTableTitle;
+    private Label DateAndTime,lblServing, lblServing1, lblCounter,lblTitle,lblTableTitle,lblProceed;
     @FXML
     private TableView tblServings;
     @FXML
@@ -136,46 +136,54 @@ public class DisplayController implements Initializable, ScreenInterface {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         System.out.println("Height: " + screenBounds.getHeight() + " Width: " + screenBounds.getWidth());
         
-        AnchorParent.setPrefWidth(screenBounds.getWidth());
-        AnchorParent.setPrefHeight(screenBounds.getHeight());
+        AnchorParent.setMaxWidth(screenBounds.getWidth());
+        AnchorParent.setMaxHeight(screenBounds.getHeight());
          System.out.println("AnchorPane Size");
          System.out.println("Height: " + AnchorParent.getPrefHeight()+ " Width: " + AnchorParent.getPrefWidth());
-        if(AnchorParent.getPrefHeight()>768){
-          
-            AnchorParent.getStylesheets().add("/qms/css/StyleSheet_1.css");
-            imgLogo.setFitWidth(40);
-            imgLogo.setFitHeight(40);
-            index01.setMinWidth(320);
-            index02.setMinWidth(260);
-            
-            imgFest.setFitWidth(800);
-            imgFest.setFitHeight(220);
-            lblTitle.getStyleClass().add("lbl-title-medium");
-            lblServing.getStyleClass().add("lbl-serving-medium");
-            lblServing1.getStyleClass().add("lbl-serving-medium-1");
-            lblTableTitle.getStyleClass().add("lbl-table-title-medium");
-//            btnMin.setMinWidth(70);
-//            btnMin.setMinHeight(40);
-            btnMin.getStyleClass().add("head-ic-min");
-            gridNumber.setStyle("-fx-margin: 20 40 20 40");
-            imgFest.setStyle("img-fest-medium");
-            DateAndTime.getStyleClass().add("lbl-time-medium");
-            vbBody.setSpacing(20);
-           
-        }else{
-            lblTitle.getStyleClass().add("lbl-title-default");
+        
+        if(screenBounds.getHeight()>=720 && screenBounds.getHeight()<=768){
+          lblTitle.getStyleClass().add("lbl-title-default");
             lblServing.getStyleClass().add("lbl-serving-default");
             lblServing1.getStyleClass().add("lbl-serving-default-1");
             DateAndTime.getStyleClass().add("lbl-time-default");
             lblTableTitle.getStyleClass().add("lbl-table-title-default");
-            AnchorParent.getStylesheets().add("/qms/css/StyleSheet.css");
-            imgLogo.setFitWidth(24);
-            imgLogo.setFitHeight(24);
-            index01.setMinWidth(220);
-            index02.setMinWidth(182);
+            if(screenBounds.getHeight()>720 ){
+                AnchorParent.getStylesheets().add("/qms/css/StyleSheet_1.css");
+            
+                imgLogo.setFitWidth(24);
+                imgLogo.setFitHeight(24);
+                index01.setMinWidth(220);
+                index02.setMinWidth(195);
+            }else{
+                AnchorParent.getStylesheets().add("/qms/css/StyleSheet.css");
+            
+                imgLogo.setFitWidth(16);
+                imgLogo.setFitHeight(16);
+                index01.setMinWidth(220);
+                index02.setMinWidth(182);
+            }
             
             imgFest.setFitWidth(680);
             imgFest.setFitHeight(170);
+            vbBody.setSpacing(5);
+//            lblNowSerning.getStyleClass().add("lbl-now-serving-deafult");
+            gridNumber.setStyle("-fx-margin: 0 20 0 20");
+           
+        }else if(screenBounds.getHeight()>768){
+            lblTitle.getStyleClass().add("lbl-title-large");
+            lblServing.getStyleClass().add("lbl-serving-large");
+            lblServing1.getStyleClass().add("lbl-serving-large-1");
+            DateAndTime.getStyleClass().add("lbl-time-large");
+            lblTableTitle.getStyleClass().add("lbl-table-title-large");
+            AnchorParent.getStylesheets().add("/qms/css/StyleSheet_2.css");
+            imgLogo.setFitWidth(24);
+            imgLogo.setFitHeight(24);
+            index01.setMinWidth(400);
+            index02.setMinWidth(290);
+            
+            imgFest.setFitWidth(720);
+            imgFest.setFitHeight(190);
+            
             vbBody.setSpacing(5);
 //            lblNowSerning.getStyleClass().add("lbl-now-serving-deafult");
             gridNumber.setStyle("-fx-margin: 0 20 0 20");

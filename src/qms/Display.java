@@ -51,7 +51,7 @@ public class Display extends Application {
         stage.initStyle(StageStyle.UNDECORATED);
         
         stage.setFullScreen(true);
-        stage.setResizable(false);
+//        stage.setResizable(false);
         stage.show();
     }
     
