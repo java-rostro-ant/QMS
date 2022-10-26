@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,7 +38,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -50,12 +50,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.speech.Central;
-import javax.speech.synthesis.Synthesizer;
-import javax.speech.synthesis.SynthesizerModeDesc;
-import javax.speech.synthesis.Voice;
-import javazoom.jl.decoder.JavaLayerException;
 import org.rmj.appdriver.GRider;
+import org.rmj.appdriver.SQLUtil;
 import org.rmj.appdriver.StringHelper;
 import qms.base.LTranDet;
 import qms.base.Queue;
@@ -68,13 +64,13 @@ import qms.model.TableModel;
  * @author User
  */
 public class DisplayController implements Initializable, ScreenInterface {
-
     private GRider oApp;
-     String readText ="";
+    String readText ="";
     private Queue oTrans;
     private LTranDet oListener;
     private String ctr_number = "";
     private int seconds = 0;
+    
     @FXML
     private AnchorPane AnchorParent;
     @FXML
@@ -127,22 +123,17 @@ public class DisplayController implements Initializable, ScreenInterface {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-//       Timeline voiceline = new Timeline(new KeyFrame(Duration.seconds(6), e -> {
-//            
-//            playVoice();
-//        }));
-//        voiceline.setCycleCount(Timeline.INDEFINITE);
-//        voiceline.play();
+
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         System.out.println("Height: " + screenBounds.getHeight() + " Width: " + screenBounds.getWidth());
         
         AnchorParent.setMaxWidth(screenBounds.getWidth());
         AnchorParent.setMaxHeight(screenBounds.getHeight());
-         System.out.println("AnchorPane Size");
-         System.out.println("Height: " + AnchorParent.getPrefHeight()+ " Width: " + AnchorParent.getPrefWidth());
+        System.out.println("AnchorPane Size");
+        System.out.println("Height: " + AnchorParent.getPrefHeight()+ " Width: " + AnchorParent.getPrefWidth());
         
         if(screenBounds.getHeight()>=720 && screenBounds.getHeight()<=768){
-          lblTitle.getStyleClass().add("lbl-title-default");
+            lblTitle.getStyleClass().add("lbl-title-default");
             lblServing.getStyleClass().add("lbl-serving-default");
             lblServing1.getStyleClass().add("lbl-serving-default-1");
             DateAndTime.getStyleClass().add("lbl-time-default");

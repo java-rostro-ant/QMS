@@ -3,9 +3,12 @@ package qms;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 import javafx.application.Application;
 import org.rmj.appdriver.GRider;
+import org.rmj.appdriver.SQLUtil;
 
 public class Login4Display {
     public static void main(String [] args){      
@@ -35,6 +38,24 @@ public class Login4Display {
         
         Display instance = new Display();
         instance.setGRider(oApp);
+        
+        try {
+            String lsSQL = "SELECT * FROM Queueing_Info ORDER BY sTransNox DESC LIMIT 1";
+            ResultSet loRS = oApp.executeQuery(lsSQL);
+
+            if (loRS.next()){
+                if (!loRS.getString("dTransact").equals(SQLUtil.dateFormat(oApp.getServerDate(), SQLUtil.FORMAT_SHORT_DATE))){
+                    lsSQL = "DELETE FROM Queueing_Ongoing";
+                    oApp.executeQuery(lsSQL, "Queueing_Ongoing", oApp.getBranchCode(), "");
+                    
+                    lsSQL = "UPDATE Queueing_Info SET cTranStat = '2'" +
+                            " WHERE cTranStat <> '2'" +
+                                " AND dTransact = " + SQLUtil.toSQL(loRS.getString("dTransact"));
+                    oApp.executeQuery(lsSQL, "Queueing_Info", oApp.getBranchCode(), "");
+                }
+            }
+        } catch (SQLException e) {
+        }
         
         Application.launch(instance.getClass());
     }
