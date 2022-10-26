@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -153,9 +152,8 @@ public class Queue {
      public void setOngoing(int fnIndex, Object foValue) throws SQLException{
         p_oOngoing.updateString(fnIndex, (String) foValue);
         p_oOngoing.updateRow();
-
-//        if (p_oListener != null) p_oListener.MasterRetreive(fnIndex, p_oMaster.getString(fnIndex));
     }
+     
     public boolean PreviousTransaction()throws SQLException{
         if (p_oApp == null){
             p_sMessage = "Application driver is not set.";
@@ -171,7 +169,10 @@ public class Queue {
             String lsStat = String.valueOf(p_nTranStat);
             String lsCondition = " cTranStat = '0'";
         
-            lsCondition = lsCondition + " AND sCtrCodex = " + SQLUtil.toSQL((String)getCounter("sCtrCodex"));
+            lsCondition = lsCondition + 
+                            " AND sCtrCodex = " + SQLUtil.toSQL((String)getCounter("sCtrCodex")) +
+                            " AND sCtrNmber < " + SQLUtil.toSQL(p_oMaster.getString("sCtrNmber"));
+            
             lsSQL = getSQ_Master() + lsCondition + "  ORDER BY sTransNox DESC LIMIT 1";
           
             //open master
@@ -180,12 +181,11 @@ public class Queue {
             while(loRS.next()){
                 transNo = loRS.getString("sTransNox");
             }
+            
             if(!transNo.isEmpty()){
-                
                 return updateToNotActive(transNo) 
-                        && updateToActive(transNo);
+                    && updateToActive(transNo);
             }
-             
        } catch (SQLException ex) {
             Logger.getLogger(Queue.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -199,18 +199,43 @@ public class Queue {
         createOngoing();
         String lsSQL;
         p_sMessage = "";
+        
+        //check muna kung merong nilampasan na mas mataas ang ticket #
+        try {
+            ResultSet loRS;
+            String lsCondition = " cTranStat = '0'";
+        
+            lsCondition = lsCondition + 
+                            " AND sCtrCodex = " + SQLUtil.toSQL((String)getCounter("sCtrCodex")) +
+                            " AND sCtrNmber > " + SQLUtil.toSQL(p_oMaster.getString("sCtrNmber"));
+            
+            lsSQL = getSQ_Master() + lsCondition + "  ORDER BY sTransNox ASC LIMIT 1";
+          
+            //open master
+            loRS = p_oApp.executeQuery(lsSQL);
+            String transNo = "";
+            while(loRS.next()){
+                transNo = loRS.getString("sTransNox");
+            }
+            
+            if(!transNo.isEmpty()){
+                return updateToNotActive(transNo) 
+                    && updateToActive(transNo);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
         if(OpenOngoing()){
             String lsCtrCodex = System.getProperty("counter.id");
-            int lnCtr = Integer.parseInt(p_oOngoing.getString("sCtrNmber").toString());
+            int lnCtr = Integer.parseInt(p_oOngoing.getString("sCtrNmber"));
             
-            deleteOngoing();
+            //deleteOngoing();
             return insertOngoing(lsCtrCodex,String.valueOf(lnCtr + 1));
-        
         }else{
             String lsCtrCodex = System.getProperty("counter.id");
             return insertOngoing(lsCtrCodex, "1");
         }
-        
     }
     private String getTimeSartStop(){
         
@@ -226,7 +251,7 @@ public class Queue {
         
         String trasNo = SQLUtil.toSQL(MiscUtil.getNextCode(MASTER_TABLE, "sTransNox", true, p_oApp.getConnection(), p_sBranchCd));
         lsSQL = "INSERT INTO Queueing_Info SET "+
-                "sTransNox = " + trasNo +
+                "  sTransNox = " + trasNo +
                 ", cTranStat = 1" +
                 ", dTransact = " + SQLUtil.toSQL(p_oApp.getServerDate()) +
                 ", dTimeStrt = " + SQLUtil.toSQL(getTimeSartStop()) +
@@ -263,8 +288,8 @@ public class Queue {
         lsSQL = "UPDATE Queueing_Info SET "+
                 " cTranStat = 0" +
                 " WHERE sCtrCodex = " + SQLUtil.toSQL(System.getProperty("counter.id")) +
-                " AND cTranStat <> '2'" +
-                " AND sTransNox <> " +  SQLUtil.toSQL(lsTransNo);
+                    " AND cTranStat <> '2'" +
+                    " AND sTransNox <> " +  SQLUtil.toSQL(lsTransNo);
 
        if (!lsSQL.isEmpty()){
            if (!p_bWithParent) p_oApp.beginTrans();
@@ -370,11 +395,27 @@ public class Queue {
     
     
     
-    private boolean insertOngoing(String lsCodex, String lsNumber){
-        String lsSQL = "INSERT INTO Queueing_Ongoing SET "+
-                    "sCtrCodex = " +SQLUtil.toSQL(lsCodex) + 
-                    ", sCtrNmber = " +SQLUtil.toSQL(lsNumber);
-//            lsSQL = MiscUtil.rowset2SQL(p_oOngoing, ONGOING_TABLE, "");
+    private boolean insertOngoing(String lsCodex, String lsNumber) throws SQLException{
+        //check first if it reached the max ticket
+        String lsSQL = "SELECT * FROM Queueing_Ongoing" +
+                        " ORDER BY sCtrNmber DESC LIMIT 1";
+        
+        ResultSet loRS = p_oApp.executeQuery(lsSQL);
+        
+        if (loRS.next()){
+            System.out.println(Integer.parseInt(loRS.getString("sCtrNmber")));
+            System.out.println(Integer.parseInt(System.getProperty("counter.max.number")));
+            
+            if (Integer.parseInt(loRS.getString("sCtrNmber")) > 
+                Integer.parseInt(System.getProperty("counter.max.number"))){
+                lsNumber = "1";
+            }
+        }
+        
+        deleteOngoing();
+        lsSQL = "INSERT INTO Queueing_Ongoing SET "+
+                "  sCtrCodex = " +SQLUtil.toSQL(lsCodex) + 
+                ", sCtrNmber = " +SQLUtil.toSQL(lsNumber);
             
         if (!lsSQL.isEmpty()){
             if (!p_bWithParent) p_oApp.beginTrans();
@@ -387,8 +428,9 @@ public class Queue {
 
             if (!p_bWithParent) p_oApp.commitTrans();
             System.out.println("Record successfully save to ongoing");
-                p_nEditMode = EditMode.ADDNEW;
-                return insertInfo(lsCodex,lsNumber);
+            p_nEditMode = EditMode.ADDNEW;
+            
+            return insertInfo(lsCodex, lsNumber);
         } else{
             p_sMessage = "No record to save.";
                 p_nEditMode = EditMode.ADDNEW;
@@ -396,9 +438,7 @@ public class Queue {
         }
     }
     private void deleteOngoing(){
-        
         String lsSQL = "DELETE FROM Queueing_Ongoing";
-//            lsSQL = MiscUtil.rowset2SQL(p_oOngoing, ONGOING_TABLE, "");
             
         if (!lsSQL.isEmpty()){
             if (!p_bWithParent) p_oApp.beginTrans();
@@ -546,7 +586,7 @@ public class Queue {
                 }
                 
                 p_oDisplay.moveToInsertRow();
-                MiscUtil.initRowSet(p_oDisplay); 
+                initRowSet(p_oDisplay); 
                 p_oDisplay.updateString("sCtrCodex", loRS.getString("sCtrCodex"));
                 if(transNo.isEmpty()){
                     p_oDisplay.updateString("sTransNox", "");
@@ -575,7 +615,6 @@ public class Queue {
     }
     public String getSQ_Master(){
         String lsSQL = "";
-        
                 
         lsSQL = "SELECT" + 
                     "  IFNULL(sTransNox,'') sTransNox" +
@@ -594,11 +633,9 @@ public class Queue {
     }
     public String getSQ_Counter(){
         String lsSQL = "";
-        
-      
                 
         lsSQL = "SELECT" + 
-                    " IFNULL(sCtrCodex,'') sCtrCodex" +
+                    "  IFNULL(sCtrCodex,'') sCtrCodex" +
                     ", IFNULL(sCtrDescx,'') sCtrDescx" +
                     ", IFNULL(sCompName,'') sCompName" +
                     ", IFNULL(cRecdStat,'') cRecdStat" +
@@ -610,7 +647,7 @@ public class Queue {
         String lsSQL = "";
                 
         lsSQL = "SELECT" + 
-                    " IFNULL(sCtrCodex,'') sCtrCodex" +
+                    "  IFNULL(sCtrCodex,'') sCtrCodex" +
                     ", IFNULL(sCtrNmber,'') sCtrNmber" +
                 " FROM " + ONGOING_TABLE;
         
@@ -754,5 +791,34 @@ public class Queue {
         }
         
         return lnIndex;
+    }
+    
+    private void initRowSet(CachedRowSet rowset) throws SQLException{
+        java.sql.ResultSetMetaData cols = rowset.getMetaData();
+        for(int n=1;n<=cols.getColumnCount();n++){
+            switch(cols.getColumnType(n)){
+                case java.sql.Types.BIGINT:
+                case java.sql.Types.INTEGER:
+                case java.sql.Types.SMALLINT:
+                case java.sql.Types.TINYINT:
+                    rowset.updateObject(n, 0);
+                    break;
+                case java.sql.Types.DECIMAL:
+                case java.sql.Types.DOUBLE:
+                case java.sql.Types.FLOAT:
+                case java.sql.Types.NUMERIC:
+                case java.sql.Types.REAL:
+                    rowset.updateObject(n, 0.00);
+                    break;
+                case java.sql.Types.CHAR:
+                case java.sql.Types.NCHAR:
+                case java.sql.Types.NVARCHAR:
+                case java.sql.Types.VARCHAR:
+                    rowset.updateObject(n, "");
+                    break;
+                default:
+                    rowset.updateObject(n, null);
+            }
+        }
     }
 }
