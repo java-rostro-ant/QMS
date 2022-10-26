@@ -18,7 +18,6 @@ public class Login4Counter {
         }
         System.setProperty("sys.default.path.config", path);
         
-        
         GRider oApp = new GRider();
         
         if (!oApp.loadEnv("gRider")) {
@@ -47,7 +46,6 @@ public class Login4Counter {
             System.setProperty("counter.id", po_props.getProperty("counter.id"));
             System.setProperty("counter.max.number", po_props.getProperty("counter.max.number"));
             System.setProperty("counter.thread.seconds", po_props.getProperty("counter.thread.seconds"));
-            
             return true;
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();

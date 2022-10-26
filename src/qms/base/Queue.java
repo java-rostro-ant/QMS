@@ -162,33 +162,29 @@ public class Queue {
          
         p_sMessage = "";
         try {
-            
             String lsSQL;
             ResultSet loRS;
-            RowSetFactory factory = RowSetProvider.newFactory();
-            String lsStat = String.valueOf(p_nTranStat);
-            String lsCondition = " cTranStat = '0'";
+            
+            String lsCondition;
         
-            lsCondition = lsCondition + 
-                            " AND sCtrCodex = " + SQLUtil.toSQL((String)getCounter("sCtrCodex")) +
-                            " AND sCtrNmber < " + SQLUtil.toSQL(p_oMaster.getString("sCtrNmber"));
+            lsCondition = " sCtrCodex = " + SQLUtil.toSQL((String)getCounter("sCtrCodex")) +
+                            " AND sTransNox < " + SQLUtil.toSQL(p_oMaster.getString("sTransNox")) +
+                            " AND cTranStat = '0'";
             
             lsSQL = getSQ_Master() + lsCondition + "  ORDER BY sTransNox DESC LIMIT 1";
           
-            //open master
-            loRS = p_oApp.executeQuery(lsSQL);
             String transNo = "";
-            while(loRS.next()){
-                transNo = loRS.getString("sTransNox");
-            }
+            loRS = p_oApp.executeQuery(lsSQL);  
+            if (loRS.next()) transNo = loRS.getString("sTransNox");
             
             if(!transNo.isEmpty()){
-                return updateToNotActive(transNo) 
-                    && updateToActive(transNo);
+                return updateToNotActive(transNo) && updateToActive(transNo);
             }
        } catch (SQLException ex) {
-            Logger.getLogger(Queue.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            return false;
         }
+        
         return true;
     }
     public boolean NewTransaction() throws SQLException{
@@ -196,41 +192,15 @@ public class Queue {
             p_sMessage = "Application driver is not set.";
             return false;
         }
+        
         createOngoing();
         String lsSQL;
         p_sMessage = "";
         
-        //check muna kung merong nilampasan na mas mataas ang ticket #
-        try {
-            ResultSet loRS;
-            String lsCondition = " cTranStat = '0'";
-        
-            lsCondition = lsCondition + 
-                            " AND sCtrCodex = " + SQLUtil.toSQL((String)getCounter("sCtrCodex")) +
-                            " AND sCtrNmber > " + SQLUtil.toSQL(p_oMaster.getString("sCtrNmber"));
-            
-            lsSQL = getSQ_Master() + lsCondition + "  ORDER BY sTransNox ASC LIMIT 1";
-          
-            //open master
-            loRS = p_oApp.executeQuery(lsSQL);
-            String transNo = "";
-            while(loRS.next()){
-                transNo = loRS.getString("sTransNox");
-            }
-            
-            if(!transNo.isEmpty()){
-                return updateToNotActive(transNo) 
-                    && updateToActive(transNo);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-        if(OpenOngoing()){
+        if(OpenOngoing()){                        
             String lsCtrCodex = System.getProperty("counter.id");
             int lnCtr = Integer.parseInt(p_oOngoing.getString("sCtrNmber"));
             
-            //deleteOngoing();
             return insertOngoing(lsCtrCodex,String.valueOf(lnCtr + 1));
         }else{
             String lsCtrCodex = System.getProperty("counter.id");
@@ -248,8 +218,8 @@ public class Queue {
     private boolean insertInfo(String lsCodex, String lsNumber){
         String lsSQL ;
         
-        
         String trasNo = SQLUtil.toSQL(MiscUtil.getNextCode(MASTER_TABLE, "sTransNox", true, p_oApp.getConnection(), p_sBranchCd));
+        
         lsSQL = "INSERT INTO Queueing_Info SET "+
                 "  sTransNox = " + trasNo +
                 ", cTranStat = 1" +
@@ -261,26 +231,19 @@ public class Queue {
                 ", dModified = " + SQLUtil.toSQL(p_oApp.getServerDate());
        
         if (!lsSQL.isEmpty()){
-        if (!p_bWithParent) p_oApp.beginTrans();
-
-        if (p_oApp.executeQuery(lsSQL, MASTER_TABLE, p_sBranchCd, "") <= 0){
-            if (!p_bWithParent) p_oApp.rollbackTrans();
-            p_sMessage = p_oApp.getMessage() + ";" + p_oApp.getErrMsg();
-            return false;
-        }
-
-        if (!p_bWithParent) p_oApp.commitTrans();
+            if (p_oApp.executeQuery(lsSQL, MASTER_TABLE, p_sBranchCd, "") <= 0){
+                p_sMessage = p_oApp.getMessage() + ";" + p_oApp.getErrMsg();
+                return false;
+            }
+            
             System.out.println("Record successfully save");
             p_nEditMode = EditMode.ADDNEW;
-                return true;
+            return true;
         } else{
             p_sMessage = "No record to save.";
-                p_nEditMode = EditMode.ADDNEW;
-                return false;
+            p_nEditMode = EditMode.ADDNEW;
+            return false;
         }
-        
-            
-        
     }
     
     public boolean updateToNotActive(String lsTransNo){
@@ -396,65 +359,59 @@ public class Queue {
     
     
     private boolean insertOngoing(String lsCodex, String lsNumber) throws SQLException{
+        //check muna kung merong nilampasan na mas mataas ang ticket #
+        ResultSet loRS;
+        String lsSQL;
+        String lsCondition = " cTranStat = '0'";
+
         //check first if it reached the max ticket
-        String lsSQL = "SELECT * FROM Queueing_Ongoing" +
+        lsSQL = "SELECT * FROM Queueing_Ongoing" +
                         " ORDER BY sCtrNmber DESC LIMIT 1";
-        
-        ResultSet loRS = p_oApp.executeQuery(lsSQL);
-        
+
+        loRS = p_oApp.executeQuery(lsSQL);
+
         if (loRS.next()){
-            System.out.println(Integer.parseInt(loRS.getString("sCtrNmber")));
-            System.out.println(Integer.parseInt(System.getProperty("counter.max.number")));
-            
-            if (Integer.parseInt(loRS.getString("sCtrNmber")) > 
+            if (Integer.parseInt(loRS.getString("sCtrNmber")) >= 
                 Integer.parseInt(System.getProperty("counter.max.number"))){
                 lsNumber = "1";
             }
         }
         
-        deleteOngoing();
         lsSQL = "INSERT INTO Queueing_Ongoing SET "+
                 "  sCtrCodex = " +SQLUtil.toSQL(lsCodex) + 
                 ", sCtrNmber = " +SQLUtil.toSQL(lsNumber);
             
         if (!lsSQL.isEmpty()){
             if (!p_bWithParent) p_oApp.beginTrans();
-
+            
+            deleteOngoing();
+            
             if (p_oApp.executeQuery(lsSQL, ONGOING_TABLE, p_sBranchCd, "") <= 0){
                 if (!p_bWithParent) p_oApp.rollbackTrans();
                 p_sMessage = p_oApp.getMessage() + ";" + p_oApp.getErrMsg();
                 return false;
             }
 
-            if (!p_bWithParent) p_oApp.commitTrans();
-            System.out.println("Record successfully save to ongoing");
-            p_nEditMode = EditMode.ADDNEW;
+            if (!insertInfo(lsCodex, lsNumber)){
+                if (!p_bWithParent) p_oApp.rollbackTrans();
+                return false;
+            }
             
-            return insertInfo(lsCodex, lsNumber);
+            if (!p_bWithParent) p_oApp.commitTrans();
+            
+            p_nEditMode = EditMode.ADDNEW;
+            return true;
         } else{
             p_sMessage = "No record to save.";
-                p_nEditMode = EditMode.ADDNEW;
-                return false;
+            p_nEditMode = EditMode.ADDNEW;
+            return false;
         }
     }
     private void deleteOngoing(){
         String lsSQL = "DELETE FROM Queueing_Ongoing";
-            
-        if (!lsSQL.isEmpty()){
-            if (!p_bWithParent) p_oApp.beginTrans();
-
-            if (p_oApp.executeQuery(lsSQL, ONGOING_TABLE, p_sBranchCd, "") <= 0){
-                if (!p_bWithParent) p_oApp.rollbackTrans();
-                p_sMessage = p_oApp.getMessage() + ";" + p_oApp.getErrMsg();
-
-            }
-
-            if (!p_bWithParent) p_oApp.commitTrans();
-            System.out.println("Record successfully delete.");
-        } else{
-            p_sMessage = "No record to delete.";
-        }
+        p_oApp.executeQuery(lsSQL, ONGOING_TABLE, p_sBranchCd, "");
     }
+    
     public boolean OpenCounter(){
          if (p_oApp == null){
             p_sMessage = "Application driver is not set.";
@@ -507,7 +464,7 @@ public class Queue {
     }
     
     public boolean OpenOngoing(){
-         if (p_oApp == null){
+        if (p_oApp == null){
             p_sMessage = "Application driver is not set.";
             return false;
         }
@@ -533,7 +490,7 @@ public class Queue {
                 return false;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Queue.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return true;
     }
@@ -761,7 +718,9 @@ public class Queue {
         p_oCounter = new CachedRowSetImpl();
         p_oCounter.setMetaData(meta);
        
-    }private void createOngoing() throws SQLException{
+    } 
+    
+    private void createOngoing() throws SQLException{
         RowSetMetaData meta = new RowSetMetaDataImpl();
 
         meta.setColumnCount(2);
