@@ -87,7 +87,7 @@
                                                 <Font name="Arial Black" size="64.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="lblCounter" text="Counter # 0" textFill="WHITE">
+                                          <Label fx:id="lblCounter" text="Cashier # 0" textFill="WHITE">
                                              <font>
                                                 <Font name="Arial Black" size="64.0" />
                                              </font>
@@ -104,7 +104,7 @@
                                  <center>
                                     <TableView fx:id="tblServings" disable="true" BorderPane.alignment="CENTER">
                                        <columns>
-                                          <TableColumn fx:id="index01" editable="false" maxWidth="-1.0" minWidth="220.0" prefWidth="-1.0" text="COUNTER" />
+                                          <TableColumn fx:id="index01" editable="false" maxWidth="-1.0" minWidth="220.0" prefWidth="-1.0" text="CASHIER" />
                                           <TableColumn fx:id="index02" maxWidth="-1.0" minWidth="182.0" prefWidth="-1.0" text="NO." />
                                        </columns>
                                        <BorderPane.margin>
