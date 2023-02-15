@@ -21,12 +21,18 @@
     -fx-background-color: linear-gradient(to top,  #f3791c, #fa4079);
 }
 .number-box {
-    -fx-border-color: #FFFFFF;
+    -fx-border-color: #133053;
     -fx-border-radius: 20px;
     -fx-border-width: 10px;
     /*-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);*/
 }
     
+
+.parents-body {
+-fx-background-image: url("../images/Bingo%20Motorskilo%20Number%20Board.png");
+-fx-background-repeat: no-repeat;
+-fx-background-size: cover, auto;
+}
 
 /*******************************************************************************
  *                                                                             *
@@ -184,7 +190,7 @@
     /*-fx-background-color: linear-gradient(to top left, #fa3f83, #fa6932);*/
 }
 .gradient-button{
-    -fx-background-color: linear-gradient(to bottom left, #fa3f83, #fa6932);
+    -fx-background-color: linear-gradient(to bottom left, #133053, #2f77d0);
     /*-fx-background-color: linear-gradient(to top left, #fa3f83, #fa6932);*/
 }
 
