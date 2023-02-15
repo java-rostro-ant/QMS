@@ -19,15 +19,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorParent" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" fx:id="AnchorParent" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane prefHeight="150.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <BorderPane>
                <top>
-                  <StackPane prefHeight="30.0" BorderPane.alignment="CENTER">
+                  <StackPane prefHeight="30.0" style="-fx-background-color: #133053;" BorderPane.alignment="CENTER">
                      <children>
-                        <BorderPane styleClass="gradient-header">
+                        <BorderPane>
                            <right>
                               <HBox alignment="CENTER_RIGHT" prefHeight="30.0" BorderPane.alignment="CENTER">
                                  <children>
@@ -104,7 +104,7 @@
                   </StackPane>
                </top>
                <bottom>
-                  <AnchorPane prefHeight="30.0" styleClass="gradient-footer" BorderPane.alignment="CENTER">
+                  <AnchorPane prefHeight="30.0" style="-fx-background-color: #133053;" BorderPane.alignment="CENTER">
                      <children>
                         <HBox alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -198,6 +198,9 @@
                                        <effect>
                                           <Blend />
                                        </effect>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
                                     </Button>
                                     <Button fx:id="btnNext" contentDisplay="TOP" ellipsisString="" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" styleClass="button_process" text="Next">
                                        <graphic>
