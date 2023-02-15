@@ -53,74 +53,78 @@
                <top>
                   <AnchorPane style="-fx-background-color: #133053;" BorderPane.alignment="CENTER">
                      <children>
-                        <BorderPane fx:id="toolbar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <right>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="30.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Pane fx:id="btnMin" onMouseClicked="#handleButtonMinimizeClick" prefHeight="30.0" prefWidth="50.0" styleClass="head-ic-min">
+                        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <BorderPane fx:id="toolbar">
+                                 <right>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="30.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <StackPane fx:id="img" prefHeight="30.0" prefWidth="50.0">
+                                          <Pane fx:id="btnMin" onMouseClicked="#handleButtonMinimizeClick" styleClass="head-ic-min">
                                              <children>
-                                                <ImageView fx:id="imgMinimize" fitHeight="16.0" fitWidth="16.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../images/ic-minimize.png" />
-                                                   </image>
-                                                </ImageView>
+                                                <StackPane fx:id="img" prefHeight="30.0" prefWidth="50.0">
+                                                   <children>
+                                                      <ImageView fx:id="imgMinimize" fitHeight="16.0" fitWidth="16.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../images/ic-minimize.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </StackPane>
                                              </children>
-                                          </StackPane>
+                                          </Pane>
+                                          <Pane fx:id="btnClose" layoutX="66.0" layoutY="10.0" styleClass="head-ic-close">
+                                             <children>
+                                                <StackPane onMouseClicked="#handleButtonCloseClick" prefHeight="30.0" prefWidth="50.0">
+                                                   <children>
+                                                      <ImageView fx:id="imgClose" fitHeight="16.0" fitWidth="16.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../images/ic-close.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </StackPane>
+                                             </children>
+                                          </Pane>
                                        </children>
-                                    </Pane>
-                                    <Pane fx:id="btnClose" layoutX="66.0" layoutY="10.0" prefHeight="30.0" prefWidth="50.0" styleClass="head-ic-close">
+                                    </HBox>
+                                 </right>
+                                 <center>
+                                    <AnchorPane visible="false" BorderPane.alignment="BOTTOM_LEFT">
                                        <children>
-                                          <StackPane onMouseClicked="#handleButtonCloseClick" prefHeight="30.0" prefWidth="50.0">
-                                             <children>
-                                                <ImageView fx:id="imgClose" fitHeight="16.0" fitWidth="16.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../images/ic-close.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </StackPane>
+                                          <Label fx:id="lblTitle" alignment="BOTTOM_CENTER" text="GUANZON" textFill="WHITE" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <font>
+                                                <Font name="Arial Black" size="26.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" right="20.0" />
+                                             </padding>
+                                          </Label>
                                        </children>
-                                    </Pane>
-                                 </children>
-                              </HBox>
-                           </right>
-                           <center>
-                              <AnchorPane BorderPane.alignment="BOTTOM_LEFT">
-                                 <children>
-                                    <Label fx:id="lblTitle" alignment="BOTTOM_CENTER" text="GUANZON" textFill="WHITE" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <font>
-                                          <Font name="Arial Black" size="26.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="10.0" right="20.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                           </center>
-                           <bottom>
-                              <Separator prefHeight="0.0" style="-fx-background-color: orange;" BorderPane.alignment="CENTER">
-                                 <BorderPane.margin>
-                                    <Insets left="5.0" right="5.0" top="2.0" />
-                                 </BorderPane.margin>
-                              </Separator>
-                           </bottom>
-                           <padding>
-                              <Insets top="3.0" />
-                           </padding>
-                           <left>
-                              <ImageView fx:id="imgLogo" fitHeight="30.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                                 <image>
-                                    <Image url="@../images/G%20Logo%20-%20White.png" />
-                                 </image>
-                                 <BorderPane.margin>
-                                    <Insets bottom="2.0" left="10.0" />
-                                 </BorderPane.margin>
-                              </ImageView>
-                           </left>
-                        </BorderPane>
+                                    </AnchorPane>
+                                 </center>
+                                 <bottom>
+                                    <Separator prefHeight="0.0" style="-fx-background-color: orange;" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets left="5.0" right="5.0" top="2.0" />
+                                       </BorderPane.margin>
+                                    </Separator>
+                                 </bottom>
+                                 <padding>
+                                    <Insets top="3.0" />
+                                 </padding>
+                                 <left>
+                                    <ImageView fx:id="imgLogo" fitHeight="40.0" fitWidth="300.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                                       <image>
+                                          <Image url="@../images/Guanzon%20logo%20white.png" />
+                                       </image>
+                                       <BorderPane.margin>
+                                          <Insets bottom="2.0" left="10.0" />
+                                       </BorderPane.margin>
+                                    </ImageView>
+                                 </left>
+                              </BorderPane>
+                           </children>
+                        </StackPane>
                      </children>
                   </AnchorPane>
                </top>
