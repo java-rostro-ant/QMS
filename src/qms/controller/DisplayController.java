@@ -141,15 +141,15 @@ public class DisplayController implements Initializable, ScreenInterface {
             if(screenBounds.getHeight()>720 ){
                 AnchorParent.getStylesheets().add("/qms/css/StyleSheet_1.css");
             
-                imgLogo.setFitWidth(24);
-                imgLogo.setFitHeight(24);
+//                imgLogo.setFitWidth(24);
+//                imgLogo.setFitHeight(24);
                 index01.setMinWidth(220);
                 index02.setMinWidth(195);
             }else{
                 AnchorParent.getStylesheets().add("/qms/css/StyleSheet.css");
             
-                imgLogo.setFitWidth(16);
-                imgLogo.setFitHeight(16);
+//                imgLogo.setFitWidth(16);
+//                imgLogo.setFitHeight(16);
                 index01.setMinWidth(220);
                 index02.setMinWidth(182);
             }
@@ -167,8 +167,8 @@ public class DisplayController implements Initializable, ScreenInterface {
             DateAndTime.getStyleClass().add("lbl-time-large");
             lblTableTitle.getStyleClass().add("lbl-table-title-large");
             AnchorParent.getStylesheets().add("/qms/css/StyleSheet_2.css");
-            imgLogo.setFitWidth(24);
-            imgLogo.setFitHeight(24);
+//            imgLogo.setFitWidth(24);
+//            imgLogo.setFitHeight(24);
             index01.setMinWidth(400);
             index02.setMinWidth(290);
             
