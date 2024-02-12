@@ -7,8 +7,10 @@ import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import org.rmj.appdriver.GRider;
 import qms.base.ScreenInterface;
@@ -28,7 +30,13 @@ public class FXMLDisplayController implements Initializable, ScreenInterface {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setScene(loadAnimate("/qms/view/OnDisplay.fxml"));   
+        
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        if(screenBounds.getHeight()>=720 && screenBounds.getHeight()<=768){
+            setScene(loadAnimate("/qms/view/OnDisplay1366.fxml"));   
+        }else{
+            setScene(loadAnimate("/qms/view/OnDisplay_1.fxml"));   
+        }
     }    
     
     @Override
@@ -68,6 +76,10 @@ public class FXMLDisplayController implements Initializable, ScreenInterface {
                 return new LoginController();
             case "/qms/view/Counter.fxml":
                 return new CounterController();
+            case "/qms/view/OnDisplay_1.fxml":
+                return new DisplayController1();
+            case "/qms/view/OnDisplay1366.fxml":
+                return new DisplayController1();
             case "/qms/view/OnDisplay.fxml":
                 return new DisplayController();
             default:

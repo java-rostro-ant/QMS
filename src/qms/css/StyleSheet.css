@@ -30,6 +30,17 @@
 
 .parents-body {
 -fx-background-image: url("../images/Bingo%20Motorskilo%20Number%20Board.png");
+/*-fx-background-image: url("../images/Queuing_BG_2024.png");*/
+-fx-background-repeat: no-repeat;
+-fx-background-size: cover, auto;
+}
+
+ 
+
+.parents-body-lg {
+/*-fx-background-image: url("../images/Bingo%20Motorskilo%20Number%20Board1920.png");*/
+-fx-background-color: #F3F0E9;
+/*-fx-background-image: url("../images/Queuing_BG_2024.png");*/
 -fx-background-repeat: no-repeat;
 -fx-background-size: cover, auto;
 }
@@ -81,7 +92,7 @@
 .table-view .column-header-background .label:disabled{
     -fx-opacity: 1;
     -fx-background-color: transparent;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 .table-row-cell:empty {
     -fx-background-color: transparent;
@@ -92,29 +103,31 @@
 }
 
 .table-view .column-header-background{
-    -fx-background-color:  #FFFFFF;
+    -fx-background-color:  #133052;
+    -fx-background-radius: 30 30 0 0;
 }
 
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .table-view .filler, .table-view .column-header {
     -fx-background-color: transparent;
     -fx-border-color: #e4e6e7;
     -fx-border-width: 1px 1px 1px 1px;
-    -fx-size: 34px;
-    -fx-font-size: 34px;
+    -fx-size: 52px;
+    -fx-text-fill: white;
+    -fx-font-size: 52px;
 }
 .table-view .table-cell{
     -fx-text-fill: black;
-    -fx-font-size: 34px;
+    -fx-font-size: 52px;
     -fx-font-weight: bold;
     -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
 .table-row-cell{
-    -fx-cell-size: 34px;
+    -fx-cell-size: 52px;
     -fx-font-weight: bold;
     -fx-background-color: -fx-table-cell-border-color, #e4e6e7;
     -fx-background-insets: 0, 0 0 1 0;
@@ -161,7 +174,14 @@
 }
 
 
+/* Define odd and even row colors */
+.table-row-cell:odd {
+    -fx-background-color: #f0f0f0; /* Light gray */
+}
 
+.table-row-cell:even {
+    -fx-background-color: #ffffff; /* White */
+}
 .head-ic-min {
     -fx-background-color: transparent;
 }
@@ -201,3 +221,7 @@
  * TABLE CSS                                                                     *
  *                                                                             *
  ******************************************************************************/
+.table-view .column-header > .label {
+    -fx-background-radius: 10 10 0 0; /* top-left, top-right, bottom-right, bottom-left */
+    -fx-background-color:  #133053; /* You can change the color as needed */
+}
