@@ -1,0 +1,227 @@
+/* HEADER CSS */
+
+
+.split-pane:horizontal, .split-pane:vertical {
+    -fx-background-color: transparent;
+}
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+.split-pane:horizontal {
+    -fx-background-color: transparent;
+}
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+.parent-body {
+/*    -fx-background-image: url(../images/Gradient1.png);
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-size: cover, auto;*/ 
+    -fx-background-color: linear-gradient(to top,  #f3791c, #fa4079);
+}
+.number-box {
+    -fx-border-color: #133053;
+    -fx-border-radius: 20px;
+    -fx-border-width: 10px;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);*/
+}
+    
+
+.parents-body {
+-fx-background-image: url("../images/Bingo%20Motorskilo%20Number%20Board.png");
+/*-fx-background-image: url("../images/Queuing_BG_2024.png");*/
+-fx-background-repeat: no-repeat;
+-fx-background-size: cover, auto;
+}
+
+ 
+
+.parents-body-lg {
+-fx-background-image: url("../images/gfest20251080.png");
+-fx-background-repeat: no-repeat;
+-fx-background-size: cover, auto;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * BUTTON BODY CSS                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.button_process {
+  -fx-background-color: transparent;
+  -fx-text-fill: white;
+  -fx-cursor: hand;
+}
+.button_process:hover
+{
+  -fx-background-color: #FF901A;
+  -fx-text-fill: black;
+}
+
+.button_process:hover > .glyph-icon
+{
+  -fx-fill: black;
+}
+
+.button_process > .glyph-icon {
+   -fx-fill: white;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * TABLE CSS                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.table-view{
+    -fx-opacity: 1;
+   -fx-background-color: transparent;
+}
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:disabled{
+    -fx-opacity: 1;
+}
+
+.table-view .column-header-background .label:disabled{
+    -fx-opacity: 1;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+.table-view .column-header-background{
+    -fx-background-color:  transparent;
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .filler, .table-view .column-header {
+    -fx-border-width: 0px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}
+.table-view .table-cell{
+    -fx-text-fill: white;
+    -fx-font-size: 43px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+}
+.table-row-cell{
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+.table-row-cell:selected {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+}
+ 
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background, 
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+.table-view .scroll-bar * {
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+.table-row-cell:filled > .table-cell:selected,
+.table-row-cell:filled:selected > .table-cell {
+    -fx-background: -fx-selection-bar-non-focused;
+}
+.table-view{
+    -fx-border-color: transparent;
+    -fx-border-width: 1px 1px 1px 1px;
+}
+
+
+/* Define odd and even row colors */
+.table-row-cell:odd {
+    -fx-background-color: transparent; /* Light gray */
+}
+
+.table-row-cell:even {
+    -fx-background-color: transparent; /* White */
+}
+.head-ic-min {
+    -fx-background-color: transparent;
+}
+
+.head-ic-close {
+    -fx-background-color: transparent;
+}
+
+.head-ic-min:hover {
+    -fx-background-color: #5E5E5E;
+}
+
+.head-ic-close:hover {
+    -fx-background-color: #D6001C;
+}
+
+.head-ic-min:active {
+    -fx-background-color: transparent;
+}
+.gradient-header{
+    -fx-background-color: linear-gradient(to bottom,  #f3791c, #fa4079);
+    /*-fx-background-color: linear-gradient(to top left, #fa3f83, #fa6932);*/
+}
+.gradient-footer{
+    -fx-background-color: linear-gradient(to top, #fa3f83, #fa6932);
+    /*-fx-background-color: linear-gradient(to top left, #fa3f83, #fa6932);*/
+}
+.gradient-button{
+    -fx-background-color: linear-gradient(to bottom left, #133053, #2f77d0);
+    /*-fx-background-color: linear-gradient(to top left, #fa3f83, #fa6932);*/
+}
+
+/*resize table*/
+
+/*******************************************************************************
+ *                                                                             *
+ * TABLE CSS                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+.table-view .column-header > .label {
+    -fx-background-radius: 10 10 0 0; /* top-left, top-right, bottom-right, bottom-left */
+    -fx-background-color:  #133053; /* You can change the color as needed */
+}

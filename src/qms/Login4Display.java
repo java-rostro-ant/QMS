@@ -36,7 +36,7 @@ public class Login4Display {
         
         loadProperties();
         
-        Display instance = new Display();
+        Display1080 instance = new Display1080();
         instance.setGRider(oApp);
         
         try {
