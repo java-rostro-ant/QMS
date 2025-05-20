@@ -10,20 +10,20 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" styleClass="parents-body-lg" stylesheets="@../css/StyleSheet1080.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1366.0" styleClass="parents-body-lg" stylesheets="@../css/StyleSheet768.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <StackPane id="workingSpace" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane id="workingSpace" prefHeight="768.0" prefWidth="1366.0">
          <children>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <BorderPane>
                <top>
-                  <AnchorPane prefHeight="150.0" BorderPane.alignment="CENTER">
+                  <AnchorPane prefHeight="120.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label fx:id="DateAndTime" alignment="CENTER" contentDisplay="CENTER" layoutX="1225.0" layoutY="75.0" prefHeight="45.0" prefWidth="629.0" text="Tuesday, October 11, 2022    11:30 PM" textAlignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="1225.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="75.0">
+                        <Label fx:id="DateAndTime" alignment="CENTER" contentDisplay="CENTER" layoutX="862.0" layoutY="54.0" prefHeight="45.0" prefWidth="424.0" text="Tuesday, October 11, 2022    11:30 PM" textAlignment="CENTER" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="862.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="54.0">
                            <font>
-                              <Font name="System Bold" size="30.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgClose" fitHeight="16.0" fitWidth="16.0" layoutX="1890.0" layoutY="14.0" nodeOrientation="INHERIT" onMouseClicked="#closeForm" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgClose" fitHeight="16.0" fitWidth="16.0" layoutX="1336.0" layoutY="14.0" nodeOrientation="INHERIT" onMouseClicked="#closeForm" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="1336.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
                            <image>
                               <Image url="@../images/ic-close-black.png" />
                            </image>
@@ -32,28 +32,28 @@
                   </AnchorPane>
                </top>
                <left>
-                  <AnchorPane prefWidth="1195.0" BorderPane.alignment="CENTER">
+                  <AnchorPane prefHeight="823.0" prefWidth="835.0" BorderPane.alignment="CENTER">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <BorderPane prefHeight="200.0" prefWidth="200.0">
+                              <BorderPane>
                                  <top>
-                                    <AnchorPane prefHeight="500.0" BorderPane.alignment="CENTER">
+                                    <AnchorPane prefHeight="350.0" prefWidth="650.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <Label fx:id="lblServing" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="77.0" prefHeight="365.0" prefWidth="1104.0" text="0000" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="77.0">
+                                          <Label fx:id="lblCounter" alignment="CENTER" layoutX="177.0" layoutY="44.0" prefHeight="252.0" prefWidth="481.0" text="200" textFill="WHITE" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="177.0" AnchorPane.rightAnchor="177.0" AnchorPane.topAnchor="44.0">
                                              <font>
-                                                <Font name="Arial Bold" size="320.0" />
+                                                <Font name="Arial Black" size="170.0" />
                                              </font>
                                           </Label>
                                        </children>
                                     </AnchorPane>
                                  </top>
                                  <center>
-                                    <AnchorPane prefHeight="200.0" BorderPane.alignment="CENTER">
+                                    <AnchorPane BorderPane.alignment="CENTER">
                                        <children>
-                                          <Label fx:id="lblCounter" alignment="CENTER" layoutX="229.0" layoutY="95.0" prefHeight="252.0" prefWidth="758.0" text="200" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="77.0">
+                                          <Label fx:id="lblServing" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="251.0" layoutY="56.0" text="0000" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Arial Black" size="170.0" />
+                                                <Font name="Arial Bold" size="150.0" />
                                              </font>
                                           </Label>
                                        </children>
@@ -66,12 +66,12 @@
                   </AnchorPane>
                </left>
                <right>
-                  <AnchorPane prefHeight="930.0" prefWidth="719.0" BorderPane.alignment="CENTER">
+                  <AnchorPane prefHeight="200.0" prefWidth="520.0" BorderPane.alignment="CENTER">
                      <children>
-                        <TableView fx:id="tblServings" disable="true" layoutX="28.0" layoutY="132.0" prefHeight="742.0" prefWidth="618.0">
+                        <TableView fx:id="tblServings" disable="true" layoutX="14.0" layoutY="80.0" prefHeight="508.0" prefWidth="428.0">
                            <columns>
-                              <TableColumn fx:id="index01" editable="false" maxWidth="458.0" minWidth="114.0" prefWidth="307.0" text="Cashier No." />
-                              <TableColumn fx:id="index02" editable="false" maxWidth="458.0" minWidth="114.0" prefWidth="307.0" text="Customer No." />
+                              <TableColumn fx:id="index01" editable="false" maxWidth="458.0" minWidth="114.0" prefWidth="214.0" text="Cashier No." />
+                              <TableColumn fx:id="index02" editable="false" maxWidth="458.0" minWidth="114.0" prefWidth="214.0" text="Customer No." />
                            </columns>
                         </TableView>
                      </children>

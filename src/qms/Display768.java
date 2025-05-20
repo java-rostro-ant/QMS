@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 import org.rmj.appdriver.GRider;
 import qms.controller.Display1080Controller;
 
-public class Display1080 extends Application {
+public class Display768 extends Application {
     public static GRider oApp;
     
     private double xOffset = 0; 
@@ -21,8 +21,8 @@ public class Display1080 extends Application {
     @Override
     public void start(Stage stage) throws Exception {        
         FXMLLoader view = new FXMLLoader();
-        view.setLocation(getClass().getResource("/qms/view/OnDisplay_1_new.fxml"));
-        //view.setLocation(getClass().getResource("/qms/view/OnDisplay1366_new.fxml"));
+        //view.setLocation(getClass().getResource("/qms/view/OnDisplay_1_new.fxml"));
+        view.setLocation(getClass().getResource("/qms/view/OnDisplay1366_new.fxml"));
         
         Display1080Controller controller = new Display1080Controller();
         controller.setGRider(oApp);
